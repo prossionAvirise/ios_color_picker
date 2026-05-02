@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:ios_color_picker/show_ios_color_picker.dart';
 
@@ -30,7 +31,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   Color backgroundColor = Colors.green;
-  IOSColorPickerController iosColorPickerController =
+  final IOSColorPickerController iosColorPickerController =
       IOSColorPickerController();
 
   @override
@@ -41,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final nativePickerSupported =
+        !kIsWeb && defaultTargetPlatform == TargetPlatform.iOS;
+
     return Scaffold(
       backgroundColor: backgroundColor,
       body: Center(
@@ -48,20 +52,20 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {
-                iosColorPickerController.showNativeIosColorPicker(
-                  darkMode: true,
-                  startingColor: backgroundColor,
-                  onColorChanged: (color) {
-                    setState(() => backgroundColor = color);
-                  },
-                );
-              },
-              child: Text("Native iOS"),
+              onPressed: nativePickerSupported
+                  ? () {
+                      iosColorPickerController.showNativeIosColorPicker(
+                        darkMode: true,
+                        startingColor: backgroundColor,
+                        onColorChanged: (color) {
+                          setState(() => backgroundColor = color);
+                        },
+                      );
+                    }
+                  : null,
+              child: const Text("Native iOS"),
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 iosColorPickerController.showIOSCustomColorPicker(
@@ -72,7 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   },
                 );
               },
-              child: Text("Custom iOS for all"),
+              child: const Text("Custom iOS for all"),
             ),
           ],
         ),

@@ -20,8 +20,9 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
 
   @override
   void initState() {
-    (CacheHelper().getData(key: "selector_index") as Future<dynamic>)
-        .then((onValue) {
+    (CacheHelper().getData(key: "selector_index") as Future<dynamic>).then((
+      onValue,
+    ) {
       if (onValue != null && onValue is int) {
         setState(() {
           typeIndex = onValue;
@@ -48,8 +49,9 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
           padding: const EdgeInsets.all(2),
           width: double.infinity,
           decoration: BoxDecoration(
-              color: sliderColor,
-              borderRadius: const BorderRadius.all(Radius.circular(9))),
+            color: sliderColor,
+            borderRadius: const BorderRadius.all(Radius.circular(9)),
+          ),
           child: Stack(
             alignment: Alignment.center,
             children: [
@@ -64,10 +66,12 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                         Spacer(),
                         if (index != 2)
                           Container(
-                              height: 16,
-                              width: 1,
-                              color: const Color(0xffCFCFD5)
-                                  .withValues(alpha: 0.3))
+                            height: 16,
+                            width: 1,
+                            color: const Color(
+                              0xffCFCFD5,
+                            ).withValues(alpha: 0.3),
+                          )
                         else
                           const SizedBox(height: 16, width: 1),
                       ],
@@ -79,60 +83,60 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                 alignment: typeIndex == 0
                     ? Alignment.centerLeft
                     : typeIndex == 1
-                        ? Alignment.center
-                        : Alignment.centerRight,
+                    ? Alignment.center
+                    : Alignment.centerRight,
                 duration: const Duration(milliseconds: 200),
                 child: Container(
                   width: ((maxWidth(context) - 32) / 3),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                      color: selectedSliderColor,
-                      borderRadius: const BorderRadius.all(Radius.circular(7)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.04),
-                          blurRadius: 1,
-                          offset: const Offset(0, 3),
-                        ),
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.12),
-                          blurRadius: 8,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
+                    color: selectedSliderColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(7)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.04),
+                        blurRadius: 1,
+                        offset: const Offset(0, 3),
+                      ),
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.12),
+                        blurRadius: 8,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Row(
                 children: List.generate(3, (index) {
                   return Expanded(
-                      child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        typeIndex = index;
-                      });
-                    },
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Center(
-                            child: Text(
-                              typeText[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                    fontWeight: typeIndex == index
-                                        ? FontWeight.w700
-                                        : FontWeight.w600,
-                                  ),
+                    child: InkWell(
+                      onTap: () {
+                        setState(() {
+                          typeIndex = index;
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                typeText[index],
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontSize: 13,
+                                      fontWeight: typeIndex == index
+                                          ? FontWeight.w700
+                                          : FontWeight.w600,
+                                    ),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ));
+                  );
                 }),
               ),
             ],
@@ -142,10 +146,12 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
           ValueListenableBuilder<Color>(
             valueListenable: colorController,
             builder: (context, color, child) {
-              return GridPicker(onColorChanged: (v) {
-                colorController.updateColor(v);
-                widget.onColorChanged(colorController.value);
-              });
+              return GridPicker(
+                onColorChanged: (v) {
+                  colorController.updateColor(v);
+                  widget.onColorChanged(colorController.value);
+                },
+              );
             },
           ),
         if (typeIndex == 1)
@@ -167,11 +173,16 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
             height: componentsHeight(context),
             clipBehavior: Clip.antiAliasWithSaveLayer,
             alignment: Alignment.topCenter,
-            margin:
-                const EdgeInsets.only(top: 16, right: 16, left: 16, bottom: 17),
+            margin: const EdgeInsets.only(
+              top: 16,
+              right: 16,
+              left: 16,
+              bottom: 17,
+            ),
             width: double.infinity,
             decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8))),
+              borderRadius: BorderRadius.all(Radius.circular(8)),
+            ),
             child: ValueListenableBuilder<Color>(
               valueListenable: colorController,
               builder: (context, color, child) {

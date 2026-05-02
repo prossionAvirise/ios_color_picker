@@ -1,5 +1,9 @@
 import 'dart:ui';
 
+int _colorChannelToInt(double channel) {
+  return (channel * 255).round().clamp(0, 255).toInt();
+}
+
 extension HexColor on Color {
   /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
   static Color fromHex(String hexString) {
@@ -13,9 +17,9 @@ extension HexColor on Color {
   String toHex({bool leadingHashSign = false}) =>
       '${leadingHashSign ? '#' : ''}'
       // '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
+      '${_colorChannelToInt(r).toRadixString(16).padLeft(2, '0')}'
+      '${_colorChannelToInt(g).toRadixString(16).padLeft(2, '0')}'
+      '${_colorChannelToInt(b).toRadixString(16).padLeft(2, '0')}';
 }
 
 extension ListColorConverter on List<Color> {
@@ -53,12 +57,7 @@ extension ListColorConverter on List<Color> {
 extension ColorExtensions on Color {
   /// Converts a [Color] to a `Map<String, double>`.
   Map<String, double> toMap() {
-    return {
-      "red": r,
-      "green": g,
-      "blue": b,
-      "alpha": a,
-    };
+    return {"red": r, "green": g, "blue": b, "alpha": a};
   }
 }
 

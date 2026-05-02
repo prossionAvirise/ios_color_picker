@@ -29,7 +29,8 @@ HSVColor? hslToHsv(HSLColor color) {
   double s = 0.0;
   double v = 0.0;
   if (color.lightness != 0 && color.lightness != 1) {
-    v = color.lightness +
+    v =
+        color.lightness +
         color.saturation *
             (color.lightness < 0.5 ? color.lightness : 1 - color.lightness);
     if (v != 0) s = 2 - 2 * color.lightness / v;
@@ -45,9 +46,11 @@ HSVColor? hslToHsv(HSLColor color) {
 }
 
 bool useWhiteForeground(Color backgroundColor, {double bias = 0.0}) {
-  int v = sqrt(pow(backgroundColor.red, 2) * 0.299 +
-          pow(backgroundColor.green, 2) * 0.587 +
-          pow(backgroundColor.blue, 2) * 0.114)
-      .round();
+  final red = (backgroundColor.r * 255).round().clamp(0, 255);
+  final green = (backgroundColor.g * 255).round().clamp(0, 255);
+  final blue = (backgroundColor.b * 255).round().clamp(0, 255);
+  int v = sqrt(
+    pow(red, 2) * 0.299 + pow(green, 2) * 0.587 + pow(blue, 2) * 0.114,
+  ).round();
   return v < 130 + bias ? true : false;
 }

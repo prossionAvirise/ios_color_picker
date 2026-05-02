@@ -1,29 +1,29 @@
 name: ios_color_picker
-description: "A new Flutter package that provides native iOS Color Picker cloned UI for all platforms Web, Android, iOS, also provides native iOS picker for iOS Only"
-version: 2.0.2
+description: "A Flutter package that provides an iOS-style color picker UI for every Flutter platform, plus the native iOS color picker on iOS."
+version: 3.0.0
 homepage: https://github.com/mokhselim/ios_color_picker
 
 environment:
-  sdk: ^3.6.0
-  flutter: '>=3.3.0'
+  sdk: ^3.11.4
+  flutter: ">=3.41.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  shared_preferences: ^2.4.0
-  smooth_page_indicator: ^1.2.0+3
-  super_tooltip: ^2.0.9
+  shared_preferences: ^2.5.5
+  smooth_page_indicator: ^2.0.1
+  super_tooltip: ^2.1.1
 
   flutter_web_plugins:
     sdk: flutter
-  web: ^1.1.0
+  web: ^1.1.1
   plugin_platform_interface: ^2.1.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
