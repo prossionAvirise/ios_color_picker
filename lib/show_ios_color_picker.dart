@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'custom_picker/color_observer.dart';
@@ -24,26 +24,34 @@ class IOSColorPickerController {
     Color? startingColor,
     bool? darkMode,
   }) async {
-    assert(Platform.isIOS,
-        "Only works for iOS use (showIOSCustomColorPicker) for other platforms");
+    if (kIsWeb || defaultTargetPlatform != TargetPlatform.iOS) {
+      throw UnsupportedError(
+        "showNativeIosColorPicker only works on iOS. Use showIOSCustomColorPicker on other platforms.",
+      );
+    }
 
     selectedColor = startingColor ?? selectedColor;
 
-    IosColorPickerPlatform.instance
-        .getPlatformColor(selectedColor.toMap(), darkMode);
-    _colorSubscription = _eventChannel.receiveBroadcastStream().listen((event) {
-      if (event != null) {
-        try {
-          selectedColor = (event as Map<Object?, Object?>).toColor();
-        } catch (error) {
-          rethrow;
-        }
+    IosColorPickerPlatform.instance.getPlatformColor(
+      selectedColor.toMap(),
+      darkMode,
+    );
+    _colorSubscription = _eventChannel.receiveBroadcastStream().listen(
+      (event) {
+        if (event != null) {
+          try {
+            selectedColor = (event as Map<Object?, Object?>).toColor();
+          } catch (error) {
+            rethrow;
+          }
 
-        onColorChanged(selectedColor);
-      }
-    }, onError: (err) {
-      throw err;
-    });
+          onColorChanged(selectedColor);
+        }
+      },
+      onError: (err) {
+        throw err;
+      },
+    );
   }
 
   /// iOS Native color Picker clone, for all Platforms.
@@ -56,18 +64,19 @@ class IOSColorPickerController {
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
-        backgroundColor: Colors.transparent,
-        barrierColor: Colors.black26,
-        isScrollControlled: true,
-        context: context,
-        builder: (context) {
-          return IosColorPicker(
-            onColorSelected: (value) {
-              selectedColor = value;
-              onColorChanged(selectedColor);
-            },
-          );
-        });
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black26,
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return IosColorPicker(
+          onColorSelected: (value) {
+            selectedColor = value;
+            onColorChanged(selectedColor);
+          },
+        );
+      },
+    );
   }
 
   /// Cancel the color subscription

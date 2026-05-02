@@ -3,7 +3,7 @@ import UIKit
 
 
 public class IosColorPickerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
-    private var eventSink: FlutterEventSink? // EventSink for streaming data
+    private var eventSink: FlutterEventSink?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
         let methodChannel = FlutterMethodChannel(name: "ios_color_picker", binaryMessenger: registrar.messenger())
@@ -17,35 +17,51 @@ public class IosColorPickerPlugin: NSObject, FlutterPlugin, FlutterStreamHandler
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
         case "pickColor":
-            if let args = call.arguments as? [String: Any]
-                {
-                let defaultColor = args["defaultColor"] as? [String: CGFloat]
-                let darkMode = args["darkMode"] as? Bool ?? false
-                self.pickColor(defaultColor: defaultColor, darkMode: darkMode ,result: result)
-            } else {
-                self.pickColor(defaultColor: nil, darkMode: false, result: result)
-            }
+            let args = call.arguments as? [String: Any]
+            let defaultColor = args?["defaultColor"] as? [String: Any]
+            let darkMode = args?["darkMode"] as? Bool
+            self.pickColor(defaultColor: defaultColor, darkMode: darkMode, result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
     }
 
-    private func pickColor(defaultColor: [String: CGFloat]?, darkMode: Bool, result: @escaping FlutterResult) {
+    private func pickColor(defaultColor: [String: Any]?, darkMode: Bool?, result: @escaping FlutterResult) {
         let colorPicker = UIColorPickerViewController()
         colorPicker.selectedColor = defaultColor?.toUIColor() ?? .red
         colorPicker.modalPresentationStyle = .popover
-        if darkMode {
-                UIApplication.shared.delegate?.window??.overrideUserInterfaceStyle = .dark
-
+        if let darkMode {
+            colorPicker.overrideUserInterfaceStyle = darkMode ? .dark : .light
         }
 
         colorPicker.delegate = self
 
-        if let rootViewController = UIApplication.shared.delegate?.window??.rootViewController {
+        if let rootViewController = Self.rootViewController() {
             rootViewController.present(colorPicker, animated: true, completion: nil)
+            result(nil)
+        } else {
+            result(FlutterError(
+                code: "NO_ROOT_VIEW_CONTROLLER",
+                message: "Unable to present the iOS color picker.",
+                details: nil
+            ))
+        }
+    }
+
+    private static func rootViewController() -> UIViewController? {
+        guard let root = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .flatMap({ $0.windows })
+            .first(where: { $0.isKeyWindow })?
+            .rootViewController else {
+            return nil
         }
 
-        result(nil)
+        var topController = root
+        while let presented = topController.presentedViewController {
+            topController = presented
+        }
+        return topController
     }
 
     // MARK: - FlutterStreamHandler
@@ -96,12 +112,25 @@ extension UIColor {
     }
 }
 
-extension Dictionary where Key == String, Value == CGFloat {
+extension Dictionary where Key == String, Value == Any {
+    private func cgFloat(for key: String, fallback: CGFloat) -> CGFloat {
+        if let value = self[key] as? CGFloat {
+            return value
+        }
+        if let value = self[key] as? Double {
+            return CGFloat(value)
+        }
+        if let value = self[key] as? NSNumber {
+            return CGFloat(truncating: value)
+        }
+        return fallback
+    }
+
     func toUIColor() -> UIColor {
-        let red = self["red"] ?? 0
-        let green = self["green"] ?? 0
-        let blue = self["blue"] ?? 0
-        let alpha = self["alpha"] ?? 1
+        let red = cgFloat(for: "red", fallback: 0)
+        let green = cgFloat(for: "green", fallback: 0)
+        let blue = cgFloat(for: "blue", fallback: 0)
+        let alpha = cgFloat(for: "alpha", fallback: 1)
 
         return UIColor(
             red: red ,

@@ -1,17 +1,7 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# ios_color_picker
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-## Description
-A new Flutter package that provides native iOS Color Picker cloned UI for all platforms, with iOS Native color Picker option for iOS only 
+A Flutter package that provides an iOS-style color picker UI for every Flutter
+platform, plus access to the native iOS color picker on iOS.
 
 ## Supported Platforms
 
@@ -21,6 +11,14 @@ A new Flutter package that provides native iOS Color Picker cloned UI for all pl
 - Windows
 - iOS
 - Android
+
+## Requirements
+
+- Flutter 3.41.0 or later
+- Dart 3.11.4 or later
+- Android minSdk 24
+- iOS 14.0 or later for the native iOS picker
+- macOS 10.15 or later
 
 ## Features
 
@@ -35,11 +33,15 @@ A new Flutter package that provides native iOS Color Picker cloned UI for all pl
 
 ## Getting Started
 
-This package is easy to integrate into your Flutter application. See the usage section below to get started.
+Add the package and create a controller. Dispose the controller from your
+widget's `dispose` method because the native iOS picker streams color changes
+through an event channel.
 
 ## Usage
 
 ```dart
+final iosColorPickerController = IOSColorPickerController();
+
 /// Native iOS Color Picker
 ElevatedButton(
   onPressed: () {
@@ -72,24 +74,26 @@ ElevatedButton(
   child: Text("Custom iOS for all"),
 ),
 ```
-## You have to
-Dispose the controller because the streamer, check the example in example/ folder
-```dart
-  IOSColorPickerController iosColorPickerController =
-      IOSColorPickerController();
 
-  @override
-  void dispose() {
-    iosColorPickerController.dispose();
-    super.dispose();
-  }
+Dispose the controller:
+
+```dart
+final IOSColorPickerController iosColorPickerController =
+    IOSColorPickerController();
+
+@override
+void dispose() {
+  iosColorPickerController.dispose();
+  super.dispose();
+}
 
 ```
-🧪 Example
+
+## Example
 
 Run the app in the example/ folder to explore the plugin.
 
-Additional Information
+## Additional Information
 
 For more updates and inquiries, connect with me on LinkedIn:
 

@@ -30,10 +30,7 @@ class CacheHelper {
   }
 
   /// Save data
-  Future<bool> setData<T>({
-    required String key,
-    required T value,
-  }) async {
+  Future<bool> setData<T>({required String key, required T value}) async {
     await _ensureInitialized();
     switch (value) {
       case String _:

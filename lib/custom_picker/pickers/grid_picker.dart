@@ -13,25 +13,19 @@ class GridPicker extends StatelessWidget {
       height: componentsHeight(context),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       alignment: Alignment.topCenter,
-      margin: const EdgeInsets.fromLTRB(
-        16,
-        16,
-        16,
-        17,
-      ),
+      margin: const EdgeInsets.fromLTRB(16, 16, 16, 17),
       width: double.infinity,
       decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(8),
-        ),
+        borderRadius: BorderRadius.all(Radius.circular(8)),
       ),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         itemCount: colors.length,
         padding: EdgeInsets.zero,
         shrinkWrap: true,
-        gridDelegate:
-            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 12),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 12,
+        ),
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
@@ -39,9 +33,8 @@ class GridPicker extends StatelessWidget {
             },
             child: Container(
               padding: EdgeInsets.all(
-                  colorController.value.toHex() == colors[index].toHex()
-                      ? 3
-                      : 0),
+                colorController.value.toHex() == colors[index].toHex() ? 3 : 0,
+              ),
               decoration: BoxDecoration(
                 color: index == 0 ? Color(0xff999999) : Colors.white,
               ),
@@ -49,16 +42,13 @@ class GridPicker extends StatelessWidget {
                 borderRadius: index == 0
                     ? BorderRadius.only(topLeft: Radius.circular(6))
                     : index == 11
-                        ? BorderRadius.only(topRight: Radius.circular(6))
-                        : index == colors.length - 1
-                            ? BorderRadius.only(bottomRight: Radius.circular(6))
-                            : index == colors.length - 12
-                                ? BorderRadius.only(
-                                    bottomLeft: Radius.circular(6))
-                                : BorderRadius.zero,
-                child: ColoredBox(
-                  color: colors[index],
-                ),
+                    ? BorderRadius.only(topRight: Radius.circular(6))
+                    : index == colors.length - 1
+                    ? BorderRadius.only(bottomRight: Radius.circular(6))
+                    : index == colors.length - 12
+                    ? BorderRadius.only(bottomLeft: Radius.circular(6))
+                    : BorderRadius.zero,
+                child: ColoredBox(color: colors[index]),
               ),
             ),
           );

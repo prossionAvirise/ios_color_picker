@@ -65,8 +65,11 @@ class _AreaColorPickerState extends State<AreaColorPicker> {
   Widget colorPicker() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
-      child:
-          ColorPickerArea(currentHsvColor, onColorChanging, widget.paletteType),
+      child: ColorPickerArea(
+        currentHsvColor,
+        onColorChanging,
+        widget.paletteType,
+      ),
     );
   }
 
@@ -75,11 +78,7 @@ class _AreaColorPickerState extends State<AreaColorPicker> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            left: 16.0,
-            right: 16,
-            top: 16,
-          ),
+          padding: const EdgeInsets.only(left: 16.0, right: 16, top: 16),
           child: SizedBox(
             width: double.infinity,
             height: componentsHeight(context),
@@ -108,16 +107,18 @@ class ColorPickerArea extends StatelessWidget {
     switch (paletteType) {
       case ColorsType.hslWithSaturation:
         if (hslToHsv(
-              hsvToHsl(hsvColor)
-                  .withHue(horizontal * 360)
-                  .withLightness(vertical),
+              hsvToHsl(
+                hsvColor,
+              ).withHue(horizontal * 360).withLightness(vertical),
             ) !=
             null) {
-          onColorChanged(hslToHsv(
-            hsvToHsl(hsvColor)
-                .withHue(horizontal * 360)
-                .withLightness(vertical),
-          )!);
+          onColorChanged(
+            hslToHsv(
+              hsvToHsl(
+                hsvColor,
+              ).withHue(horizontal * 360).withLightness(vertical),
+            )!,
+          );
         }
         break;
 
@@ -127,7 +128,11 @@ class ColorPickerArea extends StatelessWidget {
   }
 
   void _handleGesture(
-      Offset position, BuildContext context, double height, double width) {
+    Offset position,
+    BuildContext context,
+    double height,
+    double width,
+  ) {
     RenderBox? getBox = context.findRenderObject() as RenderBox?;
     if (getBox == null) return;
     Offset localOffset = getBox.globalToLocal(position);
@@ -147,24 +152,32 @@ class ColorPickerArea extends StatelessWidget {
           gestures: {
             _AlwaysWinPanGestureRecognizer:
                 GestureRecognizerFactoryWithHandlers<
-                    _AlwaysWinPanGestureRecognizer>(
-              () => _AlwaysWinPanGestureRecognizer(),
-              (_AlwaysWinPanGestureRecognizer instance) {
-                instance
-                  ..onDown = ((details) => _handleGesture(
-                      details.globalPosition, context, height, width))
-                  ..onUpdate = ((details) => _handleGesture(
-                      details.globalPosition, context, height, width));
-              },
-            ),
+                  _AlwaysWinPanGestureRecognizer
+                >(() => _AlwaysWinPanGestureRecognizer(), (
+                  _AlwaysWinPanGestureRecognizer instance,
+                ) {
+                  instance
+                    ..onDown = ((details) => _handleGesture(
+                      details.globalPosition,
+                      context,
+                      height,
+                      width,
+                    ))
+                    ..onUpdate = ((details) => _handleGesture(
+                      details.globalPosition,
+                      context,
+                      height,
+                      width,
+                    ));
+                }),
           },
           child: Builder(
             builder: (BuildContext _) {
               switch (paletteType) {
                 case ColorsType.hslWithSaturation:
                   return CustomPaint(
-                      painter:
-                          HSLWithSaturationColorPainter(hsvToHsl(hsvColor)));
+                    painter: HSLWithSaturationColorPainter(hsvToHsl(hsvColor)),
+                  );
 
                 default:
                   return const CustomPaint();

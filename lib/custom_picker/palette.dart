@@ -42,11 +42,14 @@ class HSLWithSaturationColorPainter extends CustomPainter {
     canvas.drawRect(rect, Paint()..shader = gradientH.createShader(rect));
 
     canvas.drawCircle(
-      Offset(size.width * hslColor.hue / 360,
-          size.height * (1 - hslColor.lightness)),
+      Offset(
+        size.width * hslColor.hue / 360,
+        size.height * (1 - hslColor.lightness),
+      ),
       size.height * 0.04,
       Paint()
-        ..color = pointerColor ??
+        ..color =
+            pointerColor ??
             (useWhiteForeground(hslColor.toColor())
                 ? Colors.white
                 : Colors.black)
@@ -75,28 +78,31 @@ class ThumbPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     canvas.drawShadow(
-      Path()
-        ..addOval(
-          Rect.fromCircle(
-              center: const Offset(0.5, 2.0), radius: size.width * 1.8),
+      Path()..addOval(
+        Rect.fromCircle(
+          center: const Offset(0.5, 2.0),
+          radius: size.width * 1.8,
         ),
+      ),
       Colors.black,
       3.0,
       true,
     );
     canvas.drawCircle(
-        const Offset(8.0, 14 * 0.4),
-        small ? 14 : 15.5,
-        Paint()
-          ..color = Colors.white
-          ..style = PaintingStyle.fill);
+      const Offset(8.0, 14 * 0.4),
+      small ? 14 : 15.5,
+      Paint()
+        ..color = Colors.white
+        ..style = PaintingStyle.fill,
+    );
     if (!small) {
       canvas.drawCircle(
-          const Offset(8.0, 14 * 0.4),
-          13.5,
-          Paint()
-            ..color = hsvColor.toColor().withValues(alpha: 1)
-            ..style = PaintingStyle.fill);
+        const Offset(8.0, 14 * 0.4),
+        13.5,
+        Paint()
+          ..color = hsvColor.toColor().withValues(alpha: 1)
+          ..style = PaintingStyle.fill,
+      );
     }
   }
 
@@ -105,11 +111,7 @@ class ThumbPainter extends CustomPainter {
 }
 
 class TrackPainter extends CustomPainter {
-  const TrackPainter(
-    this.trackType,
-    this.hsvColor,
-    this.small,
-  );
+  const TrackPainter(this.trackType, this.hsvColor, this.small);
 
   final TrackType trackType;
   final HSVColor hsvColor;

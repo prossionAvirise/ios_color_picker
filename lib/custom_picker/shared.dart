@@ -13,10 +13,7 @@ double maxWidth(BuildContext context) {
   return width;
 }
 
-enum ColorsType {
-  hsvWithHue,
-  hslWithSaturation,
-}
+enum ColorsType { hsvWithHue, hslWithSaturation }
 
 const Color backgroundColor = Color(0xff232421);
 const Color valueColor = Color(0xff1C1C1E);

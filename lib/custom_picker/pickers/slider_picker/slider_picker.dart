@@ -14,14 +14,16 @@ class SlidePicker extends StatefulWidget {
     this.sliderSize = const Size(260, 40),
     this.showSliderText = true,
     @Deprecated(
-        'Use Theme.of(context).textTheme.bodyText1 & 2 to alter text style.')
+      'Use Theme.of(context).textTheme.bodyText1 & 2 to alter text style.',
+    )
     this.sliderTextStyle,
     this.showParams = true,
     @Deprecated('Use empty list in [labelTypes] to disable label.')
     this.showLabel = true,
     this.labelTypes = const [],
     @Deprecated(
-        'Use Theme.of(context).textTheme.bodyText1 & 2 to alter text style.')
+      'Use Theme.of(context).textTheme.bodyText1 & 2 to alter text style.',
+    )
     this.labelTextStyle,
     this.showIndicator = true,
     this.indicatorSize = const Size(280, 50),
@@ -69,15 +71,12 @@ class _SlidePickerState extends State<SlidePicker> {
   }
 
   Widget colorPickerSlider(TrackType trackType) {
-    return ColorPickerSlider(
-      trackType,
-      currentHsvColor,
-      small: false,
-      (HSVColor color) {
-        setState(() => currentHsvColor = color);
-        widget.onColorChanged(currentHsvColor.toColor());
-      },
-    );
+    return ColorPickerSlider(trackType, currentHsvColor, small: false, (
+      HSVColor color,
+    ) {
+      setState(() => currentHsvColor = color);
+      widget.onColorChanged(currentHsvColor.toColor());
+    });
   }
 
   String getColorParams(int pos) {
@@ -85,9 +84,9 @@ class _SlidePickerState extends State<SlidePicker> {
     if (widget.colorModel == ColorModel.rgb) {
       final Color color = currentHsvColor.toColor();
       return [
-        color.red.toString(),
-        color.green.toString(),
-        color.blue.toString(),
+        (color.r * 255).round().clamp(0, 255).toString(),
+        (color.g * 255).round().clamp(0, 255).toString(),
+        (color.b * 255).round().clamp(0, 255).toString(),
         '${(color.a * 100).round()}',
       ][pos];
     } else if (widget.colorModel == ColorModel.hsv) {
@@ -116,17 +115,17 @@ class _SlidePickerState extends State<SlidePicker> {
       if (widget.colorModel == ColorModel.hsv) ...[
         TrackType.hue,
         TrackType.saturation,
-        TrackType.value
+        TrackType.value,
       ],
       if (widget.colorModel == ColorModel.hsl) ...[
         TrackType.hue,
         TrackType.saturationForHSL,
-        TrackType.lightness
+        TrackType.lightness,
       ],
       if (widget.colorModel == ColorModel.rgb) ...[
         TrackType.red,
         TrackType.green,
-        TrackType.blue
+        TrackType.blue,
       ],
     ];
     List<SizedBox> sliders = [
@@ -137,12 +136,16 @@ class _SlidePickerState extends State<SlidePicker> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10.0, vertical: 2),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 10.0,
+                  vertical: 2,
+                ),
                 child: Text(
                   trackType.toString().split('.').last.toUpperCase(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 13, color: Colors.white.withValues(alpha: 0.6)),
+                    fontSize: 13,
+                    color: Colors.white.withValues(alpha: 0.6),
+                  ),
                 ),
               ),
               Expanded(
@@ -156,15 +159,17 @@ class _SlidePickerState extends State<SlidePicker> {
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
-                          color: valueColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8))),
+                        color: valueColor,
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                            fontSize: 16,
-                            letterSpacing: 0.6,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
+                          fontSize: 16,
+                          letterSpacing: 0.6,
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ],
@@ -189,10 +194,9 @@ class _SlidePickerState extends State<SlidePicker> {
             children: [
               Text(
                 "Display P3 Hex Color #",
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium
-                    ?.copyWith(color: const Color(0xff007AFF)),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: const Color(0xff007AFF),
+                ),
               ),
               Container(
                 height: 36,
@@ -201,17 +205,16 @@ class _SlidePickerState extends State<SlidePicker> {
                 alignment: Alignment.center,
                 decoration: const BoxDecoration(
                   color: valueColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
                 child: Text(
                   currentHsvColor.toColor().toHex(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      fontSize: 16,
-                      letterSpacing: 1,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600),
+                    fontSize: 16,
+                    letterSpacing: 1,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],

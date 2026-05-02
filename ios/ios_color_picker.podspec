@@ -4,14 +4,14 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'ios_color_picker'
-  s.version          = '0.0.1'
-  s.summary          = 'A new Flutter project.'
+  s.version          = '3.0.0'
+  s.summary          = 'An iOS-style color picker Flutter plugin.'
   s.description      = <<-DESC
-A new Flutter project.
+Provides an iOS-style color picker UI for Flutter, with access to the native iOS color picker on iOS.
                        DESC
-  s.homepage         = 'http://example.com'
+  s.homepage         = 'https://github.com/mokhselim/ios_color_picker'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'Mohamed Khaled Selim' => 'https://github.com/mokhselim' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
@@ -25,5 +25,5 @@ A new Flutter project.
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
   # plugin's privacy impact, and then uncomment this line. For more information,
   # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'ios_color_picker_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  s.resource_bundles = {'ios_color_picker_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end

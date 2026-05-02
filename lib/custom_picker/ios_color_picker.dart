@@ -8,10 +8,7 @@ import 'history_colors.dart';
 
 ///Returns iOS Style color Picker
 class IosColorPicker extends StatefulWidget {
-  const IosColorPicker({
-    super.key,
-    required this.onColorSelected,
-  });
+  const IosColorPicker({super.key, required this.onColorSelected});
 
   ///returns the selected color
   final ValueChanged<Color> onColorSelected;
@@ -36,9 +33,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
             splashColor: Colors.transparent,
             focusColor: Colors.transparent,
             onTap: () => Navigator.pop(context),
-            child: SizedBox(
-              width: maxWidth(context),
-            ),
+            child: SizedBox(width: maxWidth(context)),
           ),
         ),
         Container(
@@ -56,25 +51,19 @@ class _IosColorPickerState extends State<IosColorPicker> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  16,
-                  0,
-                  8,
-                  2,
-                ),
+                padding: const EdgeInsets.fromLTRB(16, 0, 8, 2),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      width: 40,
-                    ),
+                    const SizedBox(width: 40),
                     Text(
                       'Colors',
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          fontSize: 17,
-                          color: Colors.white,
-                          fontWeight: FontWeight.w700),
+                        fontSize: 17,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     IconButton(
                       highlightColor: Colors.transparent,
@@ -82,7 +71,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
                       icon: Container(
                         padding: EdgeInsets.all(4),
                         decoration: BoxDecoration(
-                            color: Color(0xff3A3A3B), shape: BoxShape.circle),
+                          color: Color(0xff3A3A3B),
+                          shape: BoxShape.circle,
+                        ),
                         child: Icon(
                           Icons.close_rounded,
                           color: Color(0xffA4A4AA),
@@ -93,9 +84,7 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   ],
                 ),
               ),
-              PickersSelectorRow(
-                onColorChanged: widget.onColorSelected,
-              ),
+              PickersSelectorRow(onColorChanged: widget.onColorSelected),
 
               ///ALL
               Padding(
@@ -103,7 +92,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
                 child: Text(
                   'OPACITY',
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontSize: 13, color: Colors.white.withValues(alpha: 0.6)),
+                    fontSize: 13,
+                    color: Colors.white.withValues(alpha: 0.6),
+                  ),
                 ),
               ),
               Row(
@@ -112,18 +103,23 @@ class _IosColorPickerState extends State<IosColorPicker> {
                   Expanded(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 2),
+                        horizontal: 12.0,
+                        vertical: 2,
+                      ),
                       child: SizedBox(
                         height: 36.0,
                         child: ValueListenableBuilder<Color>(
                           valueListenable: colorController,
                           builder: (context, color, child) {
                             return ColorPickerSlider(
-                                TrackType.alpha, HSVColor.fromColor(color),
-                                small: false, (v) {
-                              colorController.updateOpacity(v.alpha);
-                              widget.onColorSelected(colorController.value);
-                            });
+                              TrackType.alpha,
+                              HSVColor.fromColor(color),
+                              small: false,
+                              (v) {
+                                colorController.updateOpacity(v.alpha);
+                                widget.onColorSelected(colorController.value);
+                              },
+                            );
                           },
                         ),
                       ),
@@ -135,37 +131,32 @@ class _IosColorPickerState extends State<IosColorPicker> {
                     margin: const EdgeInsets.only(right: 16, left: 16),
                     alignment: Alignment.center,
                     decoration: const BoxDecoration(
-                        color: valueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8))),
+                      color: valueColor,
+                      borderRadius: BorderRadius.all(Radius.circular(8)),
+                    ),
                     child: ValueListenableBuilder<Color>(
                       valueListenable: colorController,
                       builder: (context, color, child) {
                         int alpha = (color.a * 100).toInt();
                         return Text(
                           "$alpha%",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
+                          style: Theme.of(context).textTheme.bodySmall
                               ?.copyWith(
-                                  fontSize: 16,
-                                  letterSpacing: 0.6,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600),
+                                fontSize: 16,
+                                letterSpacing: 0.6,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
                         );
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
               // const SizedBox(
               //   height: 44,
               // ),
-              Divider(
-                height: 44,
-                thickness: 0.2,
-                indent: 17,
-                endIndent: 17,
-              ),
+              Divider(height: 44, thickness: 0.2, indent: 17, endIndent: 17),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -175,13 +166,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
                         height: 78,
                         width: 78,
                         clipBehavior: Clip.antiAliasWithSaveLayer,
-                        margin: const EdgeInsets.only(
-                          left: 16,
-                        ),
+                        margin: const EdgeInsets.only(left: 16),
                         decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(10),
-                          ),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
                         ),
                         child: Transform.scale(
                           scale: 1.5,
@@ -202,22 +189,19 @@ class _IosColorPickerState extends State<IosColorPicker> {
                           return Container(
                             height: 78,
                             width: 78,
-                            margin: const EdgeInsets.only(
-                              left: 16,
-                            ),
+                            margin: const EdgeInsets.only(left: 16),
                             decoration: BoxDecoration(
-                                borderRadius: const BorderRadius.all(
-                                  Radius.circular(10),
-                                ),
-                                color: color),
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(10),
+                              ),
+                              color: color,
+                            ),
                           );
                         },
                       ),
                     ],
                   ),
-                  HistoryColors(
-                    onColorChanged: widget.onColorSelected,
-                  )
+                  HistoryColors(onColorChanged: widget.onColorSelected),
                 ],
               ),
             ],
