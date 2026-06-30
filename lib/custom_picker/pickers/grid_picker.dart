@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ios_color_picker/custom_picker/picker_sheet_theme.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import '../color_observer.dart';
 import '../shared.dart';
@@ -9,6 +10,8 @@ class GridPicker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = PickerSheetTheme.of(context);
+
     return Container(
       height: componentsHeight(context),
       clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -36,7 +39,9 @@ class GridPicker extends StatelessWidget {
                 colorController.value.toHex() == colors[index].toHex() ? 3 : 0,
               ),
               decoration: BoxDecoration(
-                color: index == 0 ? Color(0xff999999) : Colors.white,
+                color: index == 0
+                    ? const Color(0xff999999)
+                    : theme.selectionBorderColor,
               ),
               child: ClipRRect(
                 borderRadius: index == 0

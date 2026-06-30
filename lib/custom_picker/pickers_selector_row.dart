@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ios_color_picker/custom_picker/picker_sheet_theme.dart';
 import 'package:ios_color_picker/custom_picker/pickers/area_picker.dart';
 import 'package:ios_color_picker/custom_picker/pickers/grid_picker.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_picker.dart';
@@ -41,6 +42,8 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = PickerSheetTheme.of(context);
+
     return Column(
       children: [
         Container(
@@ -49,7 +52,7 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
           padding: const EdgeInsets.all(2),
           width: double.infinity,
           decoration: BoxDecoration(
-            color: sliderColor,
+            color: theme.segmentTrackColor,
             borderRadius: const BorderRadius.all(Radius.circular(9)),
           ),
           child: Stack(
@@ -90,7 +93,7 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                   width: ((maxWidth(context) - 32) / 3),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: selectedSliderColor,
+                    color: theme.segmentSelectedColor,
                     borderRadius: const BorderRadius.all(Radius.circular(7)),
                     boxShadow: [
                       BoxShadow(
@@ -124,7 +127,7 @@ class _PickersSelectorRowState extends State<PickersSelectorRow> {
                                 typeText[index],
                                 style: Theme.of(context).textTheme.bodyMedium
                                     ?.copyWith(
-                                      color: Colors.white,
+                                      color: theme.primaryTextColor,
                                       fontSize: 13,
                                       fontWeight: typeIndex == index
                                           ? FontWeight.w700

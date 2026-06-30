@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 iosColorPickerController.showIOSCustomColorPicker(
                   context: context,
                   startingColor: backgroundColor,
+                  backgroundColor: backgroundColor,
                   onColorChanged: (color) {
                     setState(() => backgroundColor = color);
                   },

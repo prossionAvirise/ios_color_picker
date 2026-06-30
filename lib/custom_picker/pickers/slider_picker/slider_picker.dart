@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ios_color_picker/custom_picker/picker_sheet_theme.dart';
 import 'package:ios_color_picker/custom_picker/extensions.dart';
 import 'package:ios_color_picker/custom_picker/pickers/slider_picker/slider_helper.dart';
 import '../../shared.dart';
@@ -111,6 +112,7 @@ class _SlidePickerState extends State<SlidePicker> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = PickerSheetTheme.of(context);
     final List<TrackType> trackTypes = [
       if (widget.colorModel == ColorModel.hsv) ...[
         TrackType.hue,
@@ -144,7 +146,7 @@ class _SlidePickerState extends State<SlidePicker> {
                   trackType.toString().split('.').last.toUpperCase(),
                   style: Theme.of(context).textTheme.titleLarge?.copyWith(
                     fontSize: 13,
-                    color: Colors.white.withValues(alpha: 0.6),
+                    color: theme.secondaryTextColor,
                   ),
                 ),
               ),
@@ -158,16 +160,16 @@ class _SlidePickerState extends State<SlidePicker> {
                       width: 77,
                       margin: const EdgeInsets.only(left: 28),
                       alignment: Alignment.center,
-                      decoration: const BoxDecoration(
-                        color: valueColor,
-                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      decoration: BoxDecoration(
+                        color: theme.valueFieldColor,
+                        borderRadius: const BorderRadius.all(Radius.circular(8)),
                       ),
                       child: Text(
                         getColorParams(trackTypes.indexOf(trackType)),
                         style: Theme.of(context).textTheme.bodySmall?.copyWith(
                           fontSize: 16,
                           letterSpacing: 0.6,
-                          color: Colors.white,
+                          color: theme.primaryTextColor,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -203,16 +205,16 @@ class _SlidePickerState extends State<SlidePicker> {
                 width: 90,
                 margin: const EdgeInsets.only(left: 8),
                 alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  color: valueColor,
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                decoration: BoxDecoration(
+                  color: theme.valueFieldColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
                 ),
                 child: Text(
                   currentHsvColor.toColor().toHex(),
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     fontSize: 16,
                     letterSpacing: 1,
-                    color: Colors.white,
+                    color: theme.primaryTextColor,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

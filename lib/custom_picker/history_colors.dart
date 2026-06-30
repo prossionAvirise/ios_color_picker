@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:ios_color_picker/custom_picker/picker_sheet_theme.dart';
 import 'package:ios_color_picker/custom_picker/shared.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:super_tooltip/super_tooltip.dart';
@@ -88,6 +89,8 @@ class _HistoryColorsState extends State<HistoryColors> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = PickerSheetTheme.of(context);
+
     return SizedBox(
       height: 97,
       width: maxWidth(context) - 120,
@@ -133,11 +136,11 @@ class _HistoryColorsState extends State<HistoryColors> {
                               width: 30,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white.withValues(alpha: 0.16),
+                                color: theme.addButtonColor,
                               ),
-                              child: const Icon(
+                              child: Icon(
                                 Icons.add,
-                                color: Color(0xffB0B0BD),
+                                color: theme.addIconColor,
                               ),
                             ),
                           ),
@@ -225,7 +228,7 @@ class _HistoryColorsState extends State<HistoryColors> {
                                   decoration: BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.all(
-                                      color: Colors.white,
+                                      color: theme.selectionBorderColor,
                                       width: 2,
                                     ),
                                   ),
@@ -252,8 +255,8 @@ class _HistoryColorsState extends State<HistoryColors> {
                   maxVisibleDots: 11,
                   spacing: 10,
                   // verticalOffset: 18,
-                  dotColor: Colors.white.withValues(alpha: 0.3),
-                  activeDotColor: Colors.white,
+                  dotColor: theme.pageIndicatorDotColor,
+                  activeDotColor: theme.pageIndicatorActiveDotColor,
                 ),
               ),
             ),

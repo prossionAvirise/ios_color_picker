@@ -63,6 +63,7 @@ ElevatedButton(
   onPressed: () {
     iosColorPickerController.showIOSCustomColorPicker(
       startingColor: backgroundColor,
+      backgroundColor: backgroundColor,
       onColorChanged: (color) {
         setState(() {
           backgroundColor = color;

@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'custom_picker/color_observer.dart';
 import 'custom_picker/ios_color_picker.dart';
 import 'custom_picker/extensions.dart';
+import 'custom_picker/shared.dart' as picker_shared;
 import 'native_picker/ios_color_picker_platform_interface.dart';
 
 ///Don't forget to Dispose the controller
@@ -57,10 +58,14 @@ class IOSColorPickerController {
   /// iOS Native color Picker clone, for all Platforms.
   ///
   /// [startingColor] is [null] then the default color will be green
+  ///
+  /// [backgroundColor] sets the bottom sheet panel background. Defaults to the
+  /// built-in dark iOS-style color when omitted.
   void showIOSCustomColorPicker({
     required BuildContext context,
     required ValueChanged<Color> onColorChanged,
     Color? startingColor,
+    Color? backgroundColor,
   }) async {
     colorController = ColorController(startingColor ?? selectedColor);
     return showModalBottomSheet(
@@ -70,6 +75,8 @@ class IOSColorPickerController {
       context: context,
       builder: (context) {
         return IosColorPicker(
+          sheetBackgroundColor:
+              backgroundColor ?? picker_shared.backgroundColor,
           onColorSelected: (value) {
             selectedColor = value;
             onColorChanged(selectedColor);
