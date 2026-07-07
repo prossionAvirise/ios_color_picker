@@ -36,7 +36,9 @@ class _IosColorPickerState extends State<IosColorPicker> {
   Widget build(BuildContext context) {
     final sheetTheme = PickerSheetTheme(
       sheetBackgroundColor: widget.sheetBackgroundColor,
-      child: _buildSheetContent(context),
+      child: Builder(
+        builder: (context) => _buildSheetContent(context),
+      ),
     );
 
     return Column(
