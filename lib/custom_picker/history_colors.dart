@@ -34,7 +34,7 @@ class _HistoryColorsState extends State<HistoryColors> {
   Future<void> initializeData() async {
     var savedColors = await CacheHelper().getData(key: "history_colors");
     if (savedColors == null || (savedColors as List).isEmpty) {
-      historyColors = defaultHistoryColors;
+      historyColors = List<Color>.from(defaultHistoryColors);
       setHistory();
     } else {
       for (var value in savedColors) {
